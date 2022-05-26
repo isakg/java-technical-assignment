@@ -3,30 +3,31 @@ package kata.supermarket.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class WeighedProduct implements Product {
+public class UnitProduct implements Product {
 
     private final String code;
 
-    private final BigDecimal pricePerKilo;
+    private final BigDecimal pricePerUnit;
 
-    public WeighedProduct(final String code, final BigDecimal pricePerKilo) {
+    public UnitProduct(final String code, final BigDecimal pricePerUnit) {
         this.code = code;
-        this.pricePerKilo = pricePerKilo;
+        this.pricePerUnit = pricePerUnit;
     }
 
-    BigDecimal pricePerKilo() {
-        return pricePerKilo;
+    BigDecimal pricePerUnit() {
+        return pricePerUnit;
     }
 
-    public Item weighing(final BigDecimal kilos) {
-        return new ItemByWeight(this, kilos);
+    public Item oneOf() {
+        return new ItemByUnit(this);
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WeighedProduct that = (WeighedProduct) o;
+        UnitProduct that = (UnitProduct) o;
         return Objects.equals(code, that.code);
     }
 

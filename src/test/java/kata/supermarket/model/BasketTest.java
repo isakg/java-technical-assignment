@@ -1,5 +1,10 @@
-package kata.supermarket;
+package kata.supermarket.model;
 
+import kata.supermarket.model.Basket;
+import kata.supermarket.model.Item;
+import kata.supermarket.model.Product;
+import kata.supermarket.model.WeighedProduct;
+import kata.supermarket.service.DiscountSchemeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -8,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +24,7 @@ class BasketTest {
     @MethodSource
     @ParameterizedTest(name = "{0}")
     void basketProvidesTotalValue(String description, String expectedTotal, Iterable<Item> items) {
-        final Basket basket = new Basket();
+        final Basket basket = new Basket(new DiscountSchemeService(new HashSet<>()));
         items.forEach(basket::add);
         assertEquals(new BigDecimal(expectedTotal), basket.total());
     }

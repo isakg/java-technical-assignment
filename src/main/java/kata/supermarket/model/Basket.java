@@ -1,4 +1,6 @@
-package kata.supermarket;
+package kata.supermarket.model;
+
+import kata.supermarket.service.DiscountSchemeService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,8 +11,11 @@ import java.util.List;
 public class Basket {
     private final List<Item> items;
 
-    public Basket() {
+    private final DiscountSchemeService discountSchemeService;
+
+    public Basket(DiscountSchemeService discountSchemeService) {
         this.items = new ArrayList<>();
+        this.discountSchemeService = discountSchemeService;
     }
 
     public void add(final Item item) {

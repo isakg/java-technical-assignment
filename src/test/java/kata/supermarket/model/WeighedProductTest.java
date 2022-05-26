@@ -1,5 +1,7 @@
-package kata.supermarket;
+package kata.supermarket.model;
 
+import kata.supermarket.model.Item;
+import kata.supermarket.model.WeighedProduct;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

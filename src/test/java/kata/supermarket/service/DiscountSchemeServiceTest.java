@@ -29,7 +29,9 @@ class DiscountSchemeServiceTest {
     }
 
     static Stream<Arguments> discountsCalculatedFromListOfItems() {
-        return Stream.of(noItemsWithNoDiscounts(), twoItemsWithBuyOneGetOneFreeDiscount());
+        return Stream.of(noItemsWithNoDiscounts(),
+                twoItemsWithBuyOneGetOneFreeDiscount(),
+                twoDifferentItemsWithBuyOneGetOneFreeDiscount());
     }
 
     private static Arguments noItemsWithNoDiscounts() {
@@ -37,8 +39,13 @@ class DiscountSchemeServiceTest {
     }
 
     private static Arguments twoItemsWithBuyOneGetOneFreeDiscount() {
-        return Arguments.of("buy one get one free discount", "1.20",
+        return Arguments.of("two items with buy one get one free discount", "1.20",
                 Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyOneGetOneFreeDiscountScheme()));
+    }
+
+    private static Arguments twoDifferentItemsWithBuyOneGetOneFreeDiscount() {
+        return Arguments.of("two wrong items with buy one get one free discount", "0.00",
+                Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyOneGetOneFreeDiscountScheme()));
     }
 
     private static Item aBoxOfCornflakes() {
@@ -47,6 +54,14 @@ class DiscountSchemeServiceTest {
 
     private static UnitProduct boxOfCornflakesProduct() {
         return new UnitProduct("A1", new BigDecimal("1.20"));
+    }
+
+    private static Item aBlockOfCheese() {
+        return new ItemByUnit(blockOfCheeseProduct());
+    }
+
+    private static UnitProduct blockOfCheeseProduct() {
+        return new UnitProduct("B1", new BigDecimal("1.60"));
     }
 
     private static DiscountScheme buyOneGetOneFreeDiscountScheme() {

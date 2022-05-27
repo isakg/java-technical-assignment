@@ -21,10 +21,17 @@ public class DiscountSchemeService {
     public BigDecimal calculateDiscounts(List<Item> items) {
         List<Product> products = items.stream().map(Item::getProduct).collect(Collectors.toList());
         BigDecimal totalDiscount = BigDecimal.ZERO;
+
         for (DiscountScheme discountScheme : discountSchemes) {
-            if (products.containsAll(discountScheme.getProducts())) {
-                products.removeAll(discountScheme.getProducts());
+            List<Product> preAppliedProducts = new ArrayList<>(products);
+            boolean allMatch = true;
+            for (Product p : discountScheme.getProducts()) {
+                allMatch = allMatch && products.remove(p);
+            }
+            if (allMatch) {
                 totalDiscount = totalDiscount.add(discountScheme.getDiscount());
+            } else {
+                products = preAppliedProducts;
             }
         }
 

@@ -21,12 +21,16 @@ public class DiscountScheme {
         return items.stream().map(Item::getProduct).collect(Collectors.toList());
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public BigDecimal getDiscount() {
         return discount;
     }
 
-    public boolean matches(List<Product> toMatch) {
-        List<Product> productsList = new ArrayList<>(toMatch);
+    public boolean matches(List<Item> toMatch) {
+        List<Product> productsList = toMatch.stream().map(Item::getProduct).collect(Collectors.toList());
         boolean allMatch = true;
         for (Product p : this.getProducts()) {
             allMatch &= productsList.remove(p);

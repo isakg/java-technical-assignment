@@ -19,13 +19,13 @@ public class DiscountSchemeService {
     }
 
     public BigDecimal calculateDiscounts(List<Item> items) {
-        final List<Product> products = items.stream().map(Item::getProduct).collect(Collectors.toList());
+        final List<Item> currentItems = new ArrayList<>(items);
         BigDecimal totalDiscount = BigDecimal.ZERO;
 
         for (DiscountScheme discountScheme : discountSchemes) {
-            if (discountScheme.matches(products)) {
+            if (discountScheme.matches(currentItems)) {
                 totalDiscount = totalDiscount.add(discountScheme.getDiscount());
-                discountScheme.getProducts().forEach(products::remove);
+                discountScheme.getItems().forEach(currentItems::remove);
             }
         }
 

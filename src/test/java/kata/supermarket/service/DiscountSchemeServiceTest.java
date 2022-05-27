@@ -108,8 +108,8 @@ class DiscountSchemeServiceTest {
         return new UnitProduct("B1", new BigDecimal("0.70"));
     }
 
-    private static UnitDiscountScheme buyOneGetOneFreeDiscountScheme() {
-        return new UnitDiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
+    private static BuyOneGetOneFreeDiscountScheme buyOneGetOneFreeDiscountScheme() {
+        return new BuyOneGetOneFreeDiscountScheme(boxOfCornflakesProduct());
     }
 
     private static UnitDiscountScheme buyTwoItemsForOnePoundDiscountScheme() {

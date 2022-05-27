@@ -1,9 +1,8 @@
 package kata.supermarket.service;
 
+import kata.supermarket.model.Discount;
 import kata.supermarket.model.DiscountScheme;
-import kata.supermarket.model.UnitDiscountScheme;
 import kata.supermarket.model.Item;
-import kata.supermarket.model.Product;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,11 +22,9 @@ public class DiscountSchemeService {
         BigDecimal totalDiscount = BigDecimal.ZERO;
 
         for (DiscountScheme discountScheme : discountSchemes) {
-            List<Item> matches = discountScheme.matches(remainingItems);
-            if (!matches.isEmpty()) {
-                matches.forEach(remainingItems::remove);
-                totalDiscount = totalDiscount.add(discountScheme.getDiscountForMatches(matches));
-            }
+            Discount discount = discountScheme.discount(remainingItems);
+            discount.getMatches().forEach(remainingItems::remove);
+            totalDiscount = totalDiscount.add(discount.getDiscount());
         }
 
         return totalDiscount.setScale(2, RoundingMode.HALF_UP);

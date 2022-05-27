@@ -18,23 +18,22 @@ public class WeightOfTypeDiscountScheme implements DiscountScheme {
         this.productType = productType;
     }
 
-    public List<Item> matches(List<Item> toMatch) {
+    public Discount discount(List<Item> items) {
         List<Item> matches = new ArrayList<>();
         BigDecimal total = BigDecimal.ZERO;
-        for (Item item : toMatch) {
+        for (Item item : items) {
             if (item.getProduct().getProductType() == this.productType && item.getWeight().isPresent()) {
                 total = total.add(item.getWeight().get());
                 matches.add(item);
             }
         }
         if (total.compareTo(minWeightCriteria) >= 0) {
-            return matches;
+            return new Discount(matches, calculateDiscount(matches));
         }
-        return new ArrayList<>();
+        return new Discount(new ArrayList<>(), BigDecimal.ZERO);
     }
 
-    @Override
-    public BigDecimal getDiscountForMatches(List<Item> matches) {
+    private BigDecimal calculateDiscount(List<Item> matches) {
         return matches.stream().map(Item::price).reduce(BigDecimal.ZERO, BigDecimal::add).multiply(percentageDiscount);
     }
 }

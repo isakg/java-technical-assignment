@@ -20,22 +20,18 @@ public class UnitDiscountScheme implements DiscountScheme {
         return products;
     }
 
-    public BigDecimal getDiscountForMatches(List<Item> matches) {
-        return discount;
-    }
-
-    public List<Item> matches(List<Item> toMatch) {
-        List<Item> remainingItems = new ArrayList<>(toMatch);
+    public Discount discount(List<Item> items) {
+        List<Item> remainingItems = new ArrayList<>(items);
         List<Item> matches = new ArrayList<>();
         for (Product product : this.getProducts()) {
             Optional<Item> match = remainingItems.stream().filter(item -> item.getProduct().equals(product)).findFirst();
             if (!match.isPresent()) {
-                return new ArrayList<>();
+                return new Discount(new ArrayList<>(), BigDecimal.ZERO);
             }
             remainingItems.remove(match.get());
             matches.add(match.get());
 
         }
-        return matches;
+        return new Discount(matches, discount);
     }
 }

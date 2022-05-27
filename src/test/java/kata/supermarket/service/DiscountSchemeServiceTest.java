@@ -12,7 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static kata.supermarket.model.ProductType.OTHER;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static kata.supermarket.model.ProductType.VEGETABLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,60 +37,65 @@ class DiscountSchemeServiceTest {
                 threeItemsWithThreeForPriceOfTwoDiscount(),
                 threeDifferentItemsWithThreeForPriceOfTwoDiscount(),
                 twoItemsWithThreeForPriceOfTwoDiscount(),
-                twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts(),
-                oneKgOfCarrotsWithKgVegetablesHalfPriceDiscount()
-                );
+                twoItemsWithTwoForOnePoundAndTwoItemsWithBuyOneGetOneFreeDiscounts(),
+                oneKgOfCarrotsWithKgVegetablesHalfPriceDiscount(),
+                oneKgOfVegetablesWithKgVegetablesHalfPriceDiscount()
+        );
     }
 
     private static Arguments noItemsWithNoDiscounts() {
-        return Arguments.of("no items and no discounts", "0.00", Collections.emptyList(), Collections.emptyList());
+        return Arguments.of("no items and no discounts", "0.00", emptyList(), emptyList());
     }
 
     private static Arguments twoItemsWithBuyOneGetOneFreeDiscount() {
         return Arguments.of("two items with buy one get one free discount", "1.20",
-                Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyOneGetOneFreeDiscountScheme()));
+                asList(aBoxOfCornflakes(), aBoxOfCornflakes()), asList(buyOneGetOneFreeDiscountScheme()));
     }
 
     private static Arguments twoDifferentItemsWithBuyOneGetOneFreeDiscount() {
         return Arguments.of("two different items with buy one get one free discount", "0.00",
-                Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyOneGetOneFreeDiscountScheme()));
+                asList(aBoxOfCornflakes(), aBlockOfCheese()), asList(buyOneGetOneFreeDiscountScheme()));
     }
 
     private static Arguments twoItemsWithTwoForOnePoundDiscount() {
         return Arguments.of("two items with two for one pound discount", "0.40",
-                Arrays.asList(aBlockOfCheese(), aBlockOfCheese()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme()));
+                asList(aBlockOfCheese(), aBlockOfCheese()), asList(buyTwoItemsForOnePoundDiscountScheme()));
     }
 
     private static Arguments twoDifferentItemsWithTwoForOnePoundDiscount() {
         return Arguments.of("two items with two for one pound discount", "0.00",
-                Arrays.asList(aBlockOfCheese(), aBoxOfCornflakes()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme()));
+                asList(aBlockOfCheese(), aBoxOfCornflakes()), asList(buyTwoItemsForOnePoundDiscountScheme()));
     }
 
     private static Arguments threeItemsWithThreeForPriceOfTwoDiscount() {
         return Arguments.of("three items with three for price of two discount", "1.20",
-                Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
+                asList(aBoxOfCornflakes(), aBoxOfCornflakes(), aBoxOfCornflakes()), asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
     }
 
     private static Arguments twoItemsWithThreeForPriceOfTwoDiscount() {
         return Arguments.of("two items with three for price of two discount", "0.00",
-                Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
+                asList(aBoxOfCornflakes(), aBoxOfCornflakes()), asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
     }
 
     private static Arguments threeDifferentItemsWithThreeForPriceOfTwoDiscount() {
         return Arguments.of("three different items with three for price of two discount", "0.00",
-                Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
+                asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes()), asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
     }
 
-    private static Arguments twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts() {
+    private static Arguments twoItemsWithTwoForOnePoundAndTwoItemsWithBuyOneGetOneFreeDiscounts() {
         return Arguments.of("two items with two for one pound and two items with buy one get one free discounts", "1.60",
-                Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme(), buyOneGetOneFreeDiscountScheme()));
+                asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes(), aBlockOfCheese()), asList(buyTwoItemsForOnePoundDiscountScheme(), buyOneGetOneFreeDiscountScheme()));
     }
 
     private static Arguments oneKgOfCarrotsWithKgVegetablesHalfPriceDiscount() {
         return Arguments.of("1kg of carrots with kg vegetables half price discount", "5.00",
-                Arrays.asList(aKgOfCarrots()), Arrays.asList(buyOneKgVegetablesGetHalfPrice()));
+                asList(aKgOfCarrots()), asList(buyOneKgVegetablesGetHalfPriceScheme()));
     }
 
+    private static Arguments oneKgOfVegetablesWithKgVegetablesHalfPriceDiscount() {
+        return Arguments.of("1kg of vegetables with kg vegetables half price discount", "20.00",
+                asList(aHalfKgOfCarrots(), aHalfKgOfPotatoes()), asList(buyOneKgVegetablesGetHalfPriceScheme()));
+    }
 
 
     private static Item aBoxOfCornflakes() {
@@ -108,6 +114,27 @@ class DiscountSchemeServiceTest {
         return new UnitProduct("B1", new BigDecimal("0.70"));
     }
 
+    private static Item aKgOfCarrots() {
+        return new ItemByWeight(carrotProduct(), new BigDecimal(1.0));
+    }
+
+    private static Item aHalfKgOfCarrots() {
+        return new ItemByWeight(carrotProduct(), new BigDecimal(0.5));
+    }
+
+    private static Item aHalfKgOfPotatoes() {
+        return new ItemByWeight(potatoProduct(), new BigDecimal(0.5));
+    }
+
+    private static WeighedProduct carrotProduct() {
+        return new WeighedProduct("C1", new BigDecimal(10.00), VEGETABLE);
+    }
+
+    private static WeighedProduct potatoProduct() {
+        return new WeighedProduct("P1", new BigDecimal(70.00), VEGETABLE);
+    }
+
+
     private static BuyOneGetOneFreeDiscountScheme buyOneGetOneFreeDiscountScheme() {
         return new BuyOneGetOneFreeDiscountScheme(boxOfCornflakesProduct());
     }
@@ -120,16 +147,7 @@ class DiscountSchemeServiceTest {
         return new BuyThreeForTwoDiscountScheme(boxOfCornflakesProduct());
     }
 
-    private static Item aKgOfCarrots() {
-        return new ItemByWeight(carrotProduct(), new BigDecimal(1.0));
-    }
-
-
-    private static WeighedProduct carrotProduct() {
-        return new WeighedProduct("C1", new BigDecimal(10.00), VEGETABLE);
-    }
-
-    private static WeightOfTypeDiscountScheme buyOneKgVegetablesGetHalfPrice() {
+    private static WeightOfTypeDiscountScheme buyOneKgVegetablesGetHalfPriceScheme() {
         return new WeightOfTypeDiscountScheme(new BigDecimal(1.0), new BigDecimal(0.5), VEGETABLE);
     }
 

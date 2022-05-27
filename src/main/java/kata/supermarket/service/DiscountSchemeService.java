@@ -19,14 +19,14 @@ public class DiscountSchemeService {
 
     public BigDecimal calculateDiscounts(List<Item> items) {
         final List<Item> remainingItems = new ArrayList<>(items);
-        BigDecimal totalDiscount = BigDecimal.ZERO;
+        BigDecimal total = BigDecimal.ZERO;
 
-        for (DiscountScheme discountScheme : discountSchemes) {
-            Discount discount = discountScheme.discount(remainingItems);
+        for (DiscountScheme scheme : discountSchemes) {
+            Discount discount = scheme.discount(remainingItems);
             discount.getMatches().forEach(remainingItems::remove);
-            totalDiscount = totalDiscount.add(discount.getDiscount());
+            total = total.add(discount.getValue());
         }
 
-        return totalDiscount.setScale(2, RoundingMode.HALF_UP);
+        return total.setScale(2, RoundingMode.HALF_UP);
     }
 }

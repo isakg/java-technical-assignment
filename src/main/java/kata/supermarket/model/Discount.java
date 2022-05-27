@@ -7,26 +7,19 @@ public class Discount {
 
     private List<Item> matches;
 
-    private BigDecimal discount;
+    private BigDecimal value;
 
-    public Discount(List<Item> matches, BigDecimal discount) {
+    Discount(List<Item> matches, BigDecimal value) {
         this.matches = matches;
-        this.discount = discount;
+        this.value = value;
     }
 
     public List<Item> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<Item> matches) {
-        this.matches = matches;
+    public BigDecimal getValue() {
+        return value;
     }
 
-    public BigDecimal getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
-    }
 }

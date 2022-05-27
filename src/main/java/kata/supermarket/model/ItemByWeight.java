@@ -1,6 +1,8 @@
 package kata.supermarket.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+import java.util.Optional;
 
 public class ItemByWeight implements Item {
 
@@ -17,7 +19,26 @@ public class ItemByWeight implements Item {
     }
 
     @Override
+    public Optional<BigDecimal> getWeight() {
+        return Optional.of(weightInKilos);
+    }
+
+    @Override
     public Product getProduct() {
         return product;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemByWeight that = (ItemByWeight) o;
+        return Objects.equals(product, that.product);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(product);
     }
 }

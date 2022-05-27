@@ -1,9 +1,6 @@
 package kata.supermarket.service;
 
-import kata.supermarket.model.DiscountScheme;
-import kata.supermarket.model.Item;
-import kata.supermarket.model.ItemByUnit;
-import kata.supermarket.model.UnitProduct;
+import kata.supermarket.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -51,7 +48,7 @@ class DiscountSchemeServiceTest {
     }
 
     private static Arguments twoDifferentItemsWithBuyOneGetOneFreeDiscount() {
-        return Arguments.of("two wrong items with buy one get one free discount", "0.00",
+        return Arguments.of("two different items with buy one get one free discount", "0.00",
                 Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyOneGetOneFreeDiscountScheme()));
     }
 
@@ -71,17 +68,17 @@ class DiscountSchemeServiceTest {
     }
 
     private static Arguments twoItemsWithThreeForPriceOfTwoDiscount() {
-        return Arguments.of("three items with three for price of two discount", "0.00",
+        return Arguments.of("two items with three for price of two discount", "0.00",
                 Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
     }
 
     private static Arguments threeDifferentItemsWithThreeForPriceOfTwoDiscount() {
-        return Arguments.of("three items with three for price of two discount", "0.00",
+        return Arguments.of("three different items with three for price of two discount", "0.00",
                 Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
     }
 
     private static Arguments twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts() {
-        return Arguments.of("three items with three for price of two and two items with buy one get one free discounts", "1.60",
+        return Arguments.of("two items with two for one pound and two items with buy one get one free discounts", "1.60",
                 Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme(), buyOneGetOneFreeDiscountScheme()));
     }
 
@@ -103,16 +100,16 @@ class DiscountSchemeServiceTest {
         return new UnitProduct("B1", new BigDecimal("0.70"));
     }
 
-    private static DiscountScheme buyOneGetOneFreeDiscountScheme() {
-        return new DiscountScheme(Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), new BigDecimal(1.20));
+    private static UnitDiscountScheme buyOneGetOneFreeDiscountScheme() {
+        return new UnitDiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
     }
 
-    private static DiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
-        return new DiscountScheme(Arrays.asList(aBlockOfCheese(), aBlockOfCheese()), new BigDecimal(0.40));
+    private static UnitDiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
+        return new UnitDiscountScheme(Arrays.asList(blockOfCheeseProduct(), blockOfCheeseProduct()), new BigDecimal(0.40));
     }
 
-    private static DiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
-        return new DiscountScheme(Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes(), aBoxOfCornflakes()), new BigDecimal(1.20));
+    private static UnitDiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
+        return new UnitDiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
     }
 
 }

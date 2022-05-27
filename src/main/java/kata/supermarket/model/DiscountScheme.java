@@ -1,6 +1,7 @@
 package kata.supermarket.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountScheme {
@@ -20,5 +21,14 @@ public class DiscountScheme {
 
     public BigDecimal getDiscount() {
         return discount;
+    }
+
+    public boolean matches(List<Product> toMatch) {
+        List<Product> productsList = new ArrayList<>(toMatch);
+        boolean allMatch = true;
+        for (Product p : this.getProducts()) {
+            allMatch &= productsList.remove(p);
+        }
+        return allMatch;
     }
 }

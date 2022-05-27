@@ -104,15 +104,15 @@ class DiscountSchemeServiceTest {
     }
 
     private static DiscountScheme buyOneGetOneFreeDiscountScheme() {
-        return new DiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
+        return new DiscountScheme(Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), new BigDecimal(1.20));
     }
 
     private static DiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
-        return new DiscountScheme(Arrays.asList(blockOfCheeseProduct(), blockOfCheeseProduct()), new BigDecimal(0.40));
+        return new DiscountScheme(Arrays.asList(aBlockOfCheese(), aBlockOfCheese()), new BigDecimal(0.40));
     }
 
     private static DiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
-        return new DiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
+        return new DiscountScheme(Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes(), aBoxOfCornflakes()), new BigDecimal(1.20));
     }
 
 }

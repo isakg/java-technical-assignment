@@ -112,12 +112,12 @@ class DiscountSchemeServiceTest {
         return new BuyOneGetOneFreeDiscountScheme(boxOfCornflakesProduct());
     }
 
-    private static UnitDiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
-        return new UnitDiscountScheme(Arrays.asList(blockOfCheeseProduct(), blockOfCheeseProduct()), new BigDecimal(0.40));
+    private static BuyTwoForPriceDiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
+        return new BuyTwoForPriceDiscountScheme(blockOfCheeseProduct(), new BigDecimal(1.00));
     }
 
-    private static UnitDiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
-        return new UnitDiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
+    private static BuyThreeForTwoDiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
+        return new BuyThreeForTwoDiscountScheme(boxOfCornflakesProduct());
     }
 
     private static Item aKgOfCarrots() {

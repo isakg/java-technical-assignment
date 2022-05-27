@@ -26,7 +26,7 @@ public class DiscountSchemeService {
             List<Product> preAppliedProducts = new ArrayList<>(products);
             boolean allMatch = true;
             for (Product p : discountScheme.getProducts()) {
-                allMatch = allMatch && products.remove(p);
+                allMatch &= products.remove(p);
             }
             if (allMatch) {
                 totalDiscount = totalDiscount.add(discountScheme.getDiscount());

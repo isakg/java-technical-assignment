@@ -33,7 +33,11 @@ class DiscountSchemeServiceTest {
                 twoItemsWithBuyOneGetOneFreeDiscount(),
                 twoDifferentItemsWithBuyOneGetOneFreeDiscount(),
                 twoItemsWithTwoForOnePoundDiscount(),
-                twoDifferentItemsWithTwoForOnePoundDiscount()
+                twoDifferentItemsWithTwoForOnePoundDiscount(),
+                threeItemsWithThreeForPriceOfTwoDiscount(),
+                threeDifferentItemsWithThreeForPriceOfTwoDiscount(),
+                twoItemsWithThreeForPriceOfTwoDiscount(),
+                twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts()
                 );
     }
 
@@ -61,6 +65,28 @@ class DiscountSchemeServiceTest {
                 Arrays.asList(aBlockOfCheese(), aBoxOfCornflakes()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme()));
     }
 
+    private static Arguments threeItemsWithThreeForPriceOfTwoDiscount() {
+        return Arguments.of("three items with three for price of two discount", "1.20",
+                Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
+    }
+
+    private static Arguments twoItemsWithThreeForPriceOfTwoDiscount() {
+        return Arguments.of("three items with three for price of two discount", "0.00",
+                Arrays.asList(aBoxOfCornflakes(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
+    }
+
+    private static Arguments threeDifferentItemsWithThreeForPriceOfTwoDiscount() {
+        return Arguments.of("three items with three for price of two discount", "0.00",
+                Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes()), Arrays.asList(buyThreeItemsForThePriceOfTwoDiscountScheme()));
+    }
+
+    private static Arguments twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts() {
+        return Arguments.of("three items with three for price of two and two items with buy one get one free discounts", "1.60",
+                Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme(), buyOneGetOneFreeDiscountScheme()));
+    }
+
+
+
     private static Item aBoxOfCornflakes() {
         return new ItemByUnit(boxOfCornflakesProduct());
     }
@@ -83,6 +109,10 @@ class DiscountSchemeServiceTest {
 
     private static DiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
         return new DiscountScheme(Arrays.asList(blockOfCheeseProduct(), blockOfCheeseProduct()), new BigDecimal(0.40));
+    }
+
+    private static DiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
+        return new DiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
     }
 
 }

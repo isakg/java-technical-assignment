@@ -31,7 +31,10 @@ class DiscountSchemeServiceTest {
     static Stream<Arguments> discountsCalculatedFromListOfItems() {
         return Stream.of(noItemsWithNoDiscounts(),
                 twoItemsWithBuyOneGetOneFreeDiscount(),
-                twoDifferentItemsWithBuyOneGetOneFreeDiscount());
+                twoDifferentItemsWithBuyOneGetOneFreeDiscount(),
+                twoItemsWithTwoForOnePoundDiscount(),
+                twoDifferentItemsWithTwoForOnePoundDiscount()
+                );
     }
 
     private static Arguments noItemsWithNoDiscounts() {
@@ -48,6 +51,16 @@ class DiscountSchemeServiceTest {
                 Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyOneGetOneFreeDiscountScheme()));
     }
 
+    private static Arguments twoItemsWithTwoForOnePoundDiscount() {
+        return Arguments.of("two items with two for one pound discount", "0.40",
+                Arrays.asList(aBlockOfCheese(), aBlockOfCheese()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme()));
+    }
+
+    private static Arguments twoDifferentItemsWithTwoForOnePoundDiscount() {
+        return Arguments.of("two items with two for one pound discount", "0.00",
+                Arrays.asList(aBlockOfCheese(), aBoxOfCornflakes()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme()));
+    }
+
     private static Item aBoxOfCornflakes() {
         return new ItemByUnit(boxOfCornflakesProduct());
     }
@@ -61,11 +74,15 @@ class DiscountSchemeServiceTest {
     }
 
     private static UnitProduct blockOfCheeseProduct() {
-        return new UnitProduct("B1", new BigDecimal("1.60"));
+        return new UnitProduct("B1", new BigDecimal("0.70"));
     }
 
     private static DiscountScheme buyOneGetOneFreeDiscountScheme() {
         return new DiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
+    }
+
+    private static DiscountScheme buyTwoItemsForOnePoundDiscountScheme() {
+        return new DiscountScheme(Arrays.asList(blockOfCheeseProduct(), blockOfCheeseProduct()), new BigDecimal(0.40));
     }
 
 }

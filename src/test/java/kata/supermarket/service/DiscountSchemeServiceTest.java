@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static kata.supermarket.model.ProductType.OTHER;
+import static kata.supermarket.model.ProductType.VEGETABLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiscountSchemeServiceTest {
@@ -34,7 +36,8 @@ class DiscountSchemeServiceTest {
                 threeItemsWithThreeForPriceOfTwoDiscount(),
                 threeDifferentItemsWithThreeForPriceOfTwoDiscount(),
                 twoItemsWithThreeForPriceOfTwoDiscount(),
-                twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts()
+                twoItemsWithTwoForOnePoundWithAndTwoItemsWithBuyOneGetOneFreeDiscounts(),
+                oneKgOfCarrotsWithKgVegetablesHalfPriceDiscount()
                 );
     }
 
@@ -82,6 +85,11 @@ class DiscountSchemeServiceTest {
                 Arrays.asList(aBoxOfCornflakes(), aBlockOfCheese(), aBoxOfCornflakes(), aBlockOfCheese()), Arrays.asList(buyTwoItemsForOnePoundDiscountScheme(), buyOneGetOneFreeDiscountScheme()));
     }
 
+    private static Arguments oneKgOfCarrotsWithKgVegetablesHalfPriceDiscount() {
+        return Arguments.of("1kg of carrots with kg vegetables half price discount", "5.00",
+                Arrays.asList(aKgOfCarrots()), Arrays.asList(buyOneKgVegetablesGetHalfPrice()));
+    }
+
 
 
     private static Item aBoxOfCornflakes() {
@@ -110,6 +118,19 @@ class DiscountSchemeServiceTest {
 
     private static UnitDiscountScheme buyThreeItemsForThePriceOfTwoDiscountScheme() {
         return new UnitDiscountScheme(Arrays.asList(boxOfCornflakesProduct(), boxOfCornflakesProduct(), boxOfCornflakesProduct()), new BigDecimal(1.20));
+    }
+
+    private static Item aKgOfCarrots() {
+        return new ItemByWeight(carrotProduct(), new BigDecimal(1.0));
+    }
+
+
+    private static WeighedProduct carrotProduct() {
+        return new WeighedProduct("C1", new BigDecimal(10.00), VEGETABLE);
+    }
+
+    private static WeightOfTypeDiscountScheme buyOneKgVegetablesGetHalfPrice() {
+        return new WeightOfTypeDiscountScheme(new BigDecimal(1.0), new BigDecimal(0.5), VEGETABLE);
     }
 
 }

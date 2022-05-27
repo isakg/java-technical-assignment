@@ -4,22 +4,25 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeightDiscountScheme implements DiscountScheme {
+public class WeightOfTypeDiscountScheme implements DiscountScheme {
+
+    private final ProductType productType;
 
     private final BigDecimal minWeightCriteria;
 
     private final BigDecimal percentageDiscount;
 
-    public WeightDiscountScheme(BigDecimal minWeightCriteria, BigDecimal percentageDiscount) {
+    public WeightOfTypeDiscountScheme(BigDecimal minWeightCriteria, BigDecimal percentageDiscount, ProductType productType) {
         this.minWeightCriteria = minWeightCriteria;
         this.percentageDiscount = percentageDiscount;
+        this.productType = productType;
     }
 
     public List<Item> matches(List<Item> toMatch) {
         List<Item> matches = new ArrayList<>();
         BigDecimal total = BigDecimal.ZERO;
         for (Item item : toMatch) {
-            if (item.getWeight().isPresent()) {
+            if (item.getProduct().getProductType() == this.productType && item.getWeight().isPresent()) {
                 total = total.add(item.getWeight().get());
                 matches.add(item);
             }

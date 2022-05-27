@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class DiscountSchemeService {
 
-    private List<DiscountScheme> discountSchemes;
+    private final List<DiscountScheme> discountSchemes;
 
     public DiscountSchemeService(List<DiscountScheme> discountSchemes) {
         this.discountSchemes = discountSchemes;

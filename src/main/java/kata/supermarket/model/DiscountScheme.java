@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public class DiscountScheme {
 
-    private List<Product> products;
+    private final List<Product> products;
 
-    private BigDecimal discount;
+    private final BigDecimal discount;
 
     public DiscountScheme(List<Product> products, BigDecimal discount) {
         this.products = products;
